@@ -1,44 +1,34 @@
-# ClickableCaptcha
+ClickableCaptcha is a clickable graphic captcha using the SkiaSharp library. This captcha generates an image with a 6x6 grid, and users need to click on the correct positions inside the image based on the prompts at the bottom.
 
-ClickableCaptcha是一个使用**SkiaSharp**类库的可点击图形验证码，这个图形验证码会生成6*6网格的图像，用户根据底部的提示点击图片内正确的相应位置。
+The code structure includes the following components:
 
-代码中包含以下结构：
+screenshot
+src
+ClickableCaptcha
+WebDemo
+screenshot is a folder to store screenshots of the actual running effect.
 
-+ screenshot
+ClickableCaptcha is the main core library.
 
-+ src
+WebDemo is a demonstration project, and specific configurations can be found in the Program.cs file.
 
-    + ClickableCaptcha
-
-    + WebDemo
-
-**screenshot**是实际运行效果截图保存文件夹；
-
-**ClickableCaptcha**是主要核心类库文件；
-
-**WebDemo**是一个演示项目，具体配置请参考*Program.cs*文件。
-
-## 截图
-
-### 桌面浏览器
+Screenshots
+Desktop Browser
 
 ![image](screenshot/pc.png)
 
-### 手机效果
+Mobile Effects
 
 ![image](screenshot/normal.png)
 ![image](screenshot/dysopsia.png)
 
-## 自定义
+Customization
+The width and height of the front end are hard-coded in the CSS based on the size of the returned image. If you need to modify the grid count or size, be sure to change the styles in the front-end CSS code.
 
-前端的宽高是根据返回的图片大小在css中硬编码的，如需要修改网格数量或者尺寸，请务必修改前端css代码中的样式。
+Deployment
+Currently, only the SkiaSharp package is referenced. To deploy, you need to install the corresponding SkiaSharp.NativeAssets package.
 
-## 部署
-
-目前只引用**SkiaSharp**包，如需部署需要安装对应的**SkiaSharp.NativeAssets**包
-
-例如Linux：
-
+For example, on Linux:
 ```xml
 <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.3" />
 ```
