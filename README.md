@@ -30,5 +30,5 @@ Currently, only the SkiaSharp package is referenced. To deploy, you need to inst
 
 For example, on Linux:
 ```xml
-<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.3" />
+<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.6" />
 ```
