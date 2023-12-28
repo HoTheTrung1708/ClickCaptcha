@@ -11,7 +11,7 @@ namespace ClickableCaptcha.Questions
 
         protected AbsQuestion((string, SKColor)[] colorDict)
         {
-            _random = new Random();
+            _random    = new Random();
             _colorDict = colorDict;
         }
 
@@ -24,10 +24,10 @@ namespace ClickableCaptcha.Questions
         {
             using (SKPaint drawStyle = new SKPaint())
             {
-                Random random = new Random();
+                Random random         = new Random();
                 drawStyle.IsAntialias = true;
-                drawStyle.Typeface = SKTypeface.FromFamilyName(fontFamily, SKFontStyleWeight.Bold, SKFontStyleWidth.ExtraCondensed, SKFontStyleSlant.Upright);
-                drawStyle.TextSize = fontSize;
+                drawStyle.Typeface    = SKTypeface.FromFamilyName(fontFamily, SKFontStyleWeight.Bold, SKFontStyleWidth.ExtraCondensed, SKFontStyleSlant.Upright);
+                drawStyle.TextSize    = fontSize;
 
                 List<CapthcaPoint> anwserResult = new List<CapthcaPoint>();
                 ((string colorName, SKColor color) colorInfo, (string questionName, string answerValue) questionInfo)[] candidateAnswer =
@@ -38,8 +38,8 @@ namespace ClickableCaptcha.Questions
                     if (CheckAnswerValue)
                     {
                         if (candidateAnswer[i].questionInfo.questionName == candidateAnswer[0].questionInfo.questionName &&
-                            candidateAnswer[i].colorInfo.colorName == candidateAnswer[0].colorInfo.colorName &&
-                            candidateAnswer[i].questionInfo.answerValue == candidateAnswer[0].questionInfo.answerValue)
+                            candidateAnswer[i].colorInfo.colorName       == candidateAnswer[0].colorInfo.colorName &&
+                            candidateAnswer[i].questionInfo.answerValue  == candidateAnswer[0].questionInfo.answerValue)
                         {
                             anwserResult.Add(candidatePositions[i]);
                         }
@@ -47,7 +47,7 @@ namespace ClickableCaptcha.Questions
                     else
                     {
                         if (candidateAnswer[i].questionInfo.questionName == candidateAnswer[0].questionInfo.questionName &&
-                            candidateAnswer[i].colorInfo.colorName == candidateAnswer[0].colorInfo.colorName)
+                            candidateAnswer[i].colorInfo.colorName       == candidateAnswer[0].colorInfo.colorName)
                         {
                             anwserResult.Add(candidatePositions[i]);
                         }
@@ -57,19 +57,17 @@ namespace ClickableCaptcha.Questions
 
                     if (dysopsia)
                     {
-                        //视觉障碍模式
                         canvas.DrawText(
                             candidateAnswer[i].questionInfo.answerValue,
-                            candidatePositions[i].X + Convert.ToInt32(width * 0.25),
-                            candidatePositions[i].Y - Convert.ToInt32(height * 0.5),//百分比越小就越下，越大就越上
+                            candidatePositions[i].X + Convert.ToInt32(width  * 0.25),
+                            candidatePositions[i].Y - Convert.ToInt32(height * 0.5),
                             drawStyle);
 
                         drawStyle.TextSize = Convert.ToInt32(fontSize * 0.5);
 
-                        //直接打印颜色方便视觉障碍人士直接辨识
                         canvas.DrawText(
                             candidateAnswer[i].colorInfo.colorName,
-                            candidatePositions[i].X + Convert.ToInt32(width * 0.25),
+                            candidatePositions[i].X + Convert.ToInt32(width  * 0.25),
                             candidatePositions[i].Y - Convert.ToInt32(height * 0.1),
                             drawStyle);
 
@@ -78,13 +76,11 @@ namespace ClickableCaptcha.Questions
                     else
                         canvas.DrawText(
                             candidateAnswer[i].questionInfo.answerValue,
-                            candidatePositions[i].X + Convert.ToInt32(width * 0.25),
+                            candidatePositions[i].X + Convert.ToInt32(width  * 0.25),
                             candidatePositions[i].Y - Convert.ToInt32(height * 0.25),
                             drawStyle);
                 }
-
-                questionName = $"请点击网格内 {anwserResult.Count} 个 {candidateAnswer[0].colorInfo.colorName} 的 {candidateAnswer[0].questionInfo.questionName}";
-
+                questionName = $"Click on {anwserResult.Count} {candidateAnswer[0].colorInfo.colorName} of {candidateAnswer[0].questionInfo.questionName}";     
                 return anwserResult.ToArray();
             }
         }
@@ -94,7 +90,7 @@ namespace ClickableCaptcha.Questions
             for (int i = 0; i < count; i++)
             {
                 (string, SKColor) color = _colorDict[_random.Next(0, _colorDict.Length - 1)];
-                (string, string) shape = CandidateList[_random.Next(0, CandidateList.Length - 1)];
+                (string, string)  shape = CandidateList[_random.Next(0, CandidateList.Length - 1)];
 
                 yield return (color, shape);
             }

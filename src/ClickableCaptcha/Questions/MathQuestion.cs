@@ -2,36 +2,35 @@
 
 namespace ClickableCaptcha.Questions
 {
-    /// <summary>
-    /// 数据问题，通过简单的数学问题让用户思考正确的答案（此类还可以通过随机方式扩展）
-    /// </summary>
+    /// Math question, prompts users to think about the correct answer through a simple mathematical problem
+    /// (This class can be extended through random methods)
     public class MathQuestion : AbsQuestion
     {
         public MathQuestion((string, SKColor)[] colorDict)
-                    : base(colorDict)
+            : base(colorDict)
         {
 
         }
 
         public override (string, string)[] CandidateList => new (string, string)[]
             {
-                ("3的倍数","3"),
-                ("3的倍数","6"),
-                ("3的倍数","9"),
-                ("3的倍数","12"),
-                ("3的倍数","18"),
-                ("3的倍数","21"),
-                ("3的倍数","24"),
-                ("3的倍数","27"),
-                ("3的倍数","42"),
+                ("Multiple of 3","3"),
+                ("Multiple of 3","6"),
+                ("Multiple of 3","9"),
+                ("Multiple of 3","12"),
+                ("Multiple of 3","18"),
+                ("Multiple of 3","21"),
+                ("Multiple of 3","24"),
+                ("Multiple of 3","27"),
+                ("Multiple of 3","42"),
 
-                ("5的倍数","5"),
-                ("5的倍数","10"),
-                ("5的倍数","20"),
-                ("5的倍数","25"),
-                ("5的倍数","35"),
-                ("5的倍数","40"),
-                ("5的倍数","45"),
+                ("Multiple of 5","5"),
+                ("Multiple of 5","10"),
+                ("Multiple of 5","20"),
+                ("Multiple of 5","25"),
+                ("Multiple of 5","35"),
+                ("Multiple of 5","40"),
+                ("Multiple of 5","45"),
             };
 
         public override bool CheckAnswerValue => false;

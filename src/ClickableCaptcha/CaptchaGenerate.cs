@@ -8,80 +8,76 @@ namespace ClickableCaptcha
     {
         public static (string colorName, SKColor color)[] ColorDict = new (string colorName, SKColor color)[]
         {
-            ("红色",SKColors.Red),//红色
-            ("绿色",SKColors.Green),//绿色
-            ("蓝色",SKColors.Blue),//蓝色
-            ("红色",SKColors.Red),//红色
-            ("绿色",SKColors.Green),//绿色
-            ("蓝色",SKColors.Blue),//蓝色
-            ("红色",SKColors.Red),//红色
-            ("绿色",SKColors.Green),//绿色
-            ("蓝色",SKColors.Blue),//蓝色
-            ("红色",SKColors.Red),//红色
-            ("绿色",SKColors.Green),//绿色
-            ("蓝色",SKColors.Blue),//蓝色
-            //("白色",SKColors.Yellow),//白色
-            //("黑色",SKColors.Black),//黑色
-            //("粉色",SKColors.Pink),//粉色
-            //("紫色",SKColors.Purple),//紫色
-            //("灰色",SKColors.Gray),//灰色
+            ("Red",      SKColors.Red),
+            ("Green",    SKColors.Green),
+            ("Blue",     SKColors.Blue),
+            ("Red",      SKColors.Red),
+            ("Green",    SKColors.Green),
+            ("Blue",     SKColors.Blue),
+            ("Red",      SKColors.Red),
+            ("Green",    SKColors.Green),
+            ("Blue",     SKColors.Blue),
+            ("Red",      SKColors.Red),
+            ("Green",    SKColors.Green),
+            ("Blue",     SKColors.Blue),
+            //("White",  SKColors.Yellow),
+            //("Black",  SKColors.Black),
+            //("Pink",   SKColors.Pink),
+            //("Purple", SKColors.Purple),
+            //("Gray",   SKColors.Gray),
         };
 
         readonly ICaptchaQuestion[] _questions;
         readonly Random _random;
 
-        readonly int _gridCount;
-        readonly int _gridMargin;
-        readonly int _gridSize;
-        readonly int _gridStrokeWidth;
-        readonly int _textFontSize;
+        readonly int    _gridCount;
+        readonly int    _gridMargin;
+        readonly int    _gridSize;
+        readonly int    _gridStrokeWidth;
+        readonly int    _textFontSize;
         readonly string _fontName;
 
-        /// <summary>
-        /// 图形验证码生成器（修改此构造函数的数值需要变更前端硬编码的宽高参数）
-        /// </summary>
-        /// <param name="questions">问题列表，可自定义和扩展增加，建议不要太多</param>
-        /// <param name="gridSize">网格单个格子的大小（像素）</param>
-        /// <param name="gridMargin">网格外边距大小（像素）</param>
-        /// <param name="gridCount">网格数量（gridCount * gridCount）</param>
-        /// <param name="gridStrokeWidth">网格变宽宽度</param>
-        /// <param name="textFontSize">默认字体大小</param>
-        /// <param name="fontName">字体名称，建议不要使用微软雅黑，如果绘制出来的验证码都是“口口口”那就要换成你机子里支持的字体名称</param>
+        /// Captcha generator constructor (Changing values in this constructor requires updating hardcoded width and height parameters in the frontend)
+        /// <param name="questions"      >List of questions, can be customized and extended, but not recommended to have too many</param>
+        /// <param name="gridSize"       >Size of each grid cell (pixels)</param>
+        /// <param name="gridMargin"     >Margin around the grid (pixels)</param>
+        /// <param name="gridCount"      >Number of grid cells (gridCount * gridCount)</param>
+        /// <param name="gridStrokeWidth">Width of the grid lines</param>
+        /// <param name="textFontSize"   >Default font size</param>
+        /// <param name="fontName"       >Font name, it is recommended not to use Microsoft YaHei; if the generated captcha looks like "口口口," then change it to a font supported on your machine</param>
         public CaptchaGenerate(ICaptchaQuestion[] questions,
-            int gridSize = 30,
-            int gridMargin = 20,
-            int gridCount = 6,
-            int gridStrokeWidth = 1,
-            int textFontSize = 14,
-            string fontName = "思源黑体 CN")
+            int gridSize        = 30,
+            int gridMargin      = 20,
+            int gridCount       = 6,
+            int gridStrokeWidth = 1, 
+            int textFontSize    = 14,
+            string fontName     = "Source Han Sans CN")
         {
             _questions = questions;
             _random = new Random();
 
-            _gridSize = gridSize;
-            _gridMargin = gridMargin;
-            _gridCount = gridCount;
+            _gridSize        = gridSize;
+            _gridMargin      = gridMargin;
+            _gridCount       = gridCount;
             _gridStrokeWidth = gridStrokeWidth;
-            _textFontSize = textFontSize;
-            _fontName = fontName;
+            _textFontSize    = textFontSize;
+            _fontName        = fontName;
         }
 
         public static ICaptchaQuestion[] GetDefaultQuestions()
         {
             return new ICaptchaQuestion[]
             {
-                new MathQuestion(ColorDict),
-                new ShapeQuestion(ColorDict),
+                new MathQuestion  (ColorDict),
+                new ShapeQuestion (ColorDict),
                 new SearchQuestion(ColorDict),
-                new ArrowQuestion(ColorDict),
+                new ArrowQuestion (ColorDict),
             };
         }
 
-        /// <summary>
-        /// 获取图形验证码
-        /// </summary>
-        /// <param name="questionIndex">采纳的问题索引</param>
-        /// <param name="dysopsia">视觉障碍模式</param>
+        /// Get the graphical captcha
+        /// <param name="questionIndex">Index of the selected question</param>
+        /// <param name="dysopsia">Visual impairment mode</param>
         /// <returns></returns>
         /// <exception cref="IndexOutOfRangeException"></exception>
         public (byte[], string) GetCaptcha(int questionIndex, bool dysopsia)
@@ -89,39 +85,39 @@ namespace ClickableCaptcha
             if (questionIndex >= _questions.Length)
                 throw new IndexOutOfRangeException();
 
-            //保存答案坐标
+            // Save answer coordinates
             CapthcaPoint[]? answerList = null;
 
-            int width = (_gridSize * _gridCount) + (_gridMargin * 2);//宽 = （网格大小 * 网格数量） + （边距 * 左边两边）
-            int height = width + (_textFontSize * 2);//高 = 宽 + （底部说明文本字体大小 * 2）
+            int width  = (_gridSize * _gridCount) + (_gridMargin * 2);
+            int height = width + (_textFontSize * 2);
 
-            //创建bitmap位图
+            // Create bitmap
             using (SKBitmap image2d = new SKBitmap(width, height, SKColorType.Bgra8888, SKAlphaType.Premul))
             {
-                //创建画笔
+                // Create canvas
                 using (SKCanvas canvas = new SKCanvas(image2d))
                 {
-                    //填充背景颜色为白色
+                    // Fill background color with white
                     canvas.DrawColor(SKColors.White);
 
                     CapthcaPoint[] positions;
 
-                    //绘制边框和网格
+                    // Draw border and grid
                     using (SKPaint borderPaint = new SKPaint())
                     {
                         borderPaint.Color = SKColors.Black;
                         borderPaint.StrokeWidth = _gridStrokeWidth;
 
-                        //绘制正方体边框
+                        // Draw square borders
                         positions = DrawRectGrid(canvas, borderPaint);
                     }
 
-                    //打乱位置
+                    // Shuffle positions
                     Queue<CapthcaPoint> positionQueues = DisturbPosition(positions);
 
                     for (int i = 0; i < _questions.Length; i++)
                     {
-                        //绘制候选答案
+                        // Draw candidate answers
                         var answer = _questions[i].DrawAnswerCandidate(
                             canvas,
                             AssignPosition(positionQueues, positions.Length, i == _questions.Length - 1).ToArray(),
@@ -134,12 +130,12 @@ namespace ClickableCaptcha
                             answerList = answer;
                     }
 
-                    //绘制问题标题
+                    // Draw question title
                     DrawQuesitonTitle(canvas, _questions[questionIndex].GetQuestionName());
 
-                    //TODO: 还可以增加噪点和随机线条以增强机器识别难度
+                    // TODO: Additional noise and random lines can be added to enhance the difficulty of machine recognition
 
-                    //返回图片byte
+                    // Return image bytes
                     using (SKImage img = SKImage.FromBitmap(image2d))
                     {
                         using (SKData p = img.Encode(SKEncodedImageFormat.Png, 100))
@@ -156,9 +152,7 @@ namespace ClickableCaptcha
             return string.Join(';', points.Select(p => $"{p.X},{p.Y}"));
         }
 
-        /// <summary>
-        /// 打乱位置以队列方式返回
-        /// </summary>
+        /// Shuffle positions and return as a queue
         /// <param name="positions"></param>
         /// <returns></returns>
         private Queue<CapthcaPoint> DisturbPosition(CapthcaPoint[] positions)
@@ -168,13 +162,10 @@ namespace ClickableCaptcha
             return new Queue<CapthcaPoint>(rands.OrderByDescending(p => p.rand).Select(p => new CapthcaPoint() { X = p.x, Y = p.y }));
         }
 
-        /// <summary>
-        /// 分配坐标
-        /// </summary>
+        /// Assign coordinates
         /// <param name="positionQueues"></param>
         /// <param name="totalPosition"></param>
         /// <param name="last"></param>
-        /// <returns></returns>
         private IEnumerable<CapthcaPoint> AssignPosition(Queue<CapthcaPoint> positionQueues, int totalPosition, bool last)
         {
             if (last)
@@ -199,10 +190,7 @@ namespace ClickableCaptcha
                 }
             }
         }
-
-        /// <summary>
-        /// 绘制问题标题
-        /// </summary>
+        /// Draw question title
         /// <param name="canvas"></param>
         /// <param name="text"></param>
         private void DrawQuesitonTitle(SKCanvas canvas, string text)
@@ -217,18 +205,14 @@ namespace ClickableCaptcha
                 canvas.DrawText(text, _gridMargin, (_gridSize * _gridCount) + (_gridMargin * 2) + _textFontSize, paint);
             }
         }
-
-        /// <summary>
-        /// 绘制正方形网格
-        /// </summary>
+        /// Draw square grid
         /// <param name="canvas"></param>
         /// <param name="borderPaint"></param>
-        /// <returns></returns>
         private CapthcaPoint[] DrawRectGrid(SKCanvas canvas, SKPaint borderPaint)
         {
             List<CapthcaPoint> positions = new List<CapthcaPoint>(_gridCount * _gridCount);
 
-            //绘制网格（横线）
+            // Draw grid lines (horizontal)
             for (int i = 0; i <= _gridCount; i++)
             {
                 canvas.DrawLine(
@@ -237,7 +221,7 @@ namespace ClickableCaptcha
                     borderPaint);
             }
 
-            //绘制网格（竖线）
+            // Draw grid lines (vertical)
             for (int i = 0; i <= _gridCount; i++)
             {
                 canvas.DrawLine(
@@ -245,7 +229,6 @@ namespace ClickableCaptcha
                     new SKPoint((i * _gridSize) + _gridMargin, (_gridSize * _gridCount) + _gridMargin + _gridStrokeWidth),
                     borderPaint);
             }
-
             for (int x = 0; x < _gridCount; x++)
             {
                 for (int y = 0; y < _gridCount; y++)
@@ -257,7 +240,6 @@ namespace ClickableCaptcha
                     });
                 }
             }
-
             return positions.ToArray();
         }
     }

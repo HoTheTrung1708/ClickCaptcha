@@ -2,9 +2,7 @@
 
 namespace ClickableCaptcha.Questions
 {
-    /// <summary>
-    /// 箭头问题，通过不同方向的箭头让用户根据文字判断正确方向的箭头
-    /// </summary>
+    /// Arrow question, prompts users to identify the correct direction of the arrow based on the text
     public class ArrowQuestion : AbsQuestion
     {
         public ArrowQuestion((string, SKColor)[] colorDict)
@@ -15,10 +13,10 @@ namespace ClickableCaptcha.Questions
 
         public override (string, string)[] CandidateList => new (string, string)[]
             {
-                ("向上箭头","↑"),
-                ("向下箭头","↓"),
-                ("向左箭头","←"),
-                ("向右箭头","→"),
+                ("Upward Arrow",   "↑"),
+                ("Downward Arrow", "↓"),
+                ("Leftward Arrow", "←"),
+                ("Rightward Arrow","→"),
             };
 
         public override bool CheckAnswerValue => true;

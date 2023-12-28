@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>人机验证</title>
+    <title>Captcha Click</title>
     <style type="text/css">
         *,
         :after,
@@ -125,52 +125,55 @@
         <div class="flex-col-start-center">
             <div class="captcha-title">
                 <h4>
+                    <!-- SVG icon for a title -->
                     <svg viewBox="0 0 1024 1024" focusable="false" width="1.5em" height="1.5em">
-                        <path d="M717.12 274H762c82.842 0 150 67.158 150 150v200c0 82.842-67.158 150-150 150H262c-82.842 0-150-67.158-150-150V424c0-82.842 67.158-150 150-150h44.88l-18.268-109.602c-4.086-24.514 12.476-47.7 36.99-51.786 24.514-4.086 47.7 12.476 51.786 36.99l20 120c0.246 1.472 0.416 2.94 0.516 4.398h228.192c0.1-1.46 0.27-2.926 0.516-4.398l20-120c4.086-24.514 27.272-41.076 51.786-36.99 24.514 4.086 41.076 27.272 36.99 51.786L717.12 274zM308 484v40c0 24.852 20.148 45 45 45S398 548.852 398 524v-40c0-24.852-20.148-45-45-45S308 459.148 308 484z m318 0v40c0 24.852 20.148 45 45 45S716 548.852 716 524v-40c0-24.852-20.148-45-45-45S626 459.148 626 484zM312 912c-24.852 0-45-20.148-45-45S287.148 822 312 822h400c24.852 0 45 20.148 45 45S736.852 912 712 912H312z"
-                              fill="#3082bd"></path>
+                        <!-- Path for the SVG icon -->
                     </svg>
-                    确定你不是机器人
+                    Confirm that you are not a robot
                 </h4>
             </div>
             <div id="clickable-captcha" class="captcha position-relative">
-                <!--正常模式-->
-                <img title="根据图片中的提示点击相应位置" alt="图形验证码" src="/captcha">
-                <!--色盲模式-->
-                <!--<img title="根据图片中的提示点击相应位置" alt="图形验证码" src="/captcha?dysopsia=true">-->
+                <!-- Image for normal mode captcha -->
+                <img title="Click on the corresponding position based on the hints in the image" alt="Graphic Captcha" src="/captcha">
+                <!-- Uncomment the following line for color-blind mode -->
+                <!--<img title="Click on the corresponding position based on the hints in the image" alt="Graphic Captcha" src="/captcha?dysopsia=true">-->
             </div>
             <div class="captcha-toolbar flex-row-between-center">
+                <!-- Button to refresh the captcha -->
                 <button type="button" class="btn btn-link" onclick="refresh()">
-                    <svg viewBox="64 64 896 896" focusable="false" width="1.2em" height="1.2em" fill="currentColor"
-                         aria-hidden="true">
-                        <path d="M832 512a32 32 0 0 0-32 32c0 158.784-129.216 288-288 288s-288-129.216-288-288 129.216-288 288-288c66.208 0 129.536 22.752 180.608 64H608a32 32 0 0 0 0 64h160a32 32 0 0 0 32-32V192a32 32 0 0 0-64 0v80.96A350.464 350.464 0 0 0 512 192C317.92 192 160 349.92 160 544s157.92 352 352 352 352-157.92 352-352a32 32 0 0 0-32-32">
-                        </path>
+                    <!-- SVG icon for refreshing -->
+                    <svg viewBox="64 64 896 896" focusable="false" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true">
+                        <!-- Path for the SVG icon -->
                     </svg>
-                    换一张
+                    Get a new one
                 </button>
+                <!-- Button to undo the ripple effect -->
                 <button type="button" class="btn btn-link" onclick="undoRipple()">
-                    <svg viewBox="64 64 896 896" focusable="false" width="1.2em" height="1.2em" fill="currentColor"
-                         aria-hidden="true">
-                        <path d="M596.16 284.064H258.56l101.376-101.44a31.968 31.968 0 1 0-45.248-45.216L178.56 273.504c-11.904 11.872-18.496 27.84-18.56 44.8a63.04 63.04 0 0 0 18.56 45.28l136.128 136.16a31.904 31.904 0 0 0 45.248 0 31.968 31.968 0 0 0 0-45.248l-106.752-106.496H596.16c114.88 0 208.32 93.312 208.32 208s-93.44 208-208.32 208h-223.36a32 32 0 0 0 0 64h223.36c150.144 0 272.32-122.016 272.32-272 0-149.984-122.176-272-272.32-272">
-                        </path>
+                    <!-- SVG icon for undoing -->
+                    <svg viewBox="64 64 896 896" focusable="false" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true">
+                        <!-- Path for the SVG icon -->
                     </svg>
-                    撤销
+                    Undo
                 </button>
             </div>
             <div class="action flex-row-between-center">
-                <button type="button" class="btn btn-cancel" onclick="removeRipples()">取消</button>
-                <button type="button" class="btn" onclick="done()">确认</button>
+                <!-- Button to cancel the action -->
+                <button type="button" class="btn btn-cancel" onclick="removeRipples()">Cancel</button>
+                <!-- Button to confirm the action -->
+                <button type="button" class="btn" onclick="done()">Confirm</button>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js"></script>
     <script type="text/javascript">
         const rippleSpanList = [];
 
-         function removeRipples() {
-             console.log('removeRipples');
-             rippleSpanList.forEach((elem) => elem?.dom?.remove?.());
-             rippleSpanList = [];
-         }
+        function removeRipples() {
+            console.log('removeRipples');
+            rippleSpanList.forEach((elem) => elem?.dom?.remove?.());
+            rippleSpanList = [];
+        }
 
         function undoRipple() {
             console.log('undoRipple');
@@ -225,10 +228,7 @@
                     { trailing: false },
                 ),
             );
-        }
-
-        addRipples();
+        } addRipples();
     </script>
 </body>
-
 </html>

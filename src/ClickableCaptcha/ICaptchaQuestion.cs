@@ -2,31 +2,26 @@
 
 namespace ClickableCaptcha
 {
-    /// <summary>
-    /// 图形验证码提问接口，可通过继承此接口扩展更多问题
-    /// </summary>
+    /// Graphic captcha question interface, can be extended by inheriting this interface for more questions
     public interface ICaptchaQuestion
     {
         string GetQuestionName();
-
-        /// <summary>
-        /// 绘制候选答案（就是画在格子里面的东西）
-        /// </summary>
-        /// <param name="canvas">画布</param>
-        /// <param name="candidatePositions">分配给你的候选答案位置，把你的候选答案绘制在该位置上就行了</param>
-        /// <param name="width">候选答案应该要绘制宽</param>
-        /// <param name="height">候选答案应该要绘制高</param>
-        /// <param name="fontFamily">候选答案需要使用的字体名称</param>
-        /// <param name="fontSize">候选答案需要使用的字体大小</param>
-        /// <param name="dysopsia">该候选答案是否开启了视觉障碍模式</param>
+        /// Draw candidate answers (what is drawn inside the grid)
+        /// <param name="canvas">Canvas</param>
+        /// <param name="candidatePositions">Positions allocated for your candidate answers, draw your candidate answers at these positions</param>
+        /// <param name="width">Width that the candidate answers should be drawn</param>
+        /// <param name="height">Height that the candidate answers should be drawn</param>
+        /// <param name="fontFamily">Font name to be used for the candidate answers</param>
+        /// <param name="fontSize">Font size to be used for the candidate answers</param>
+        /// <param name="dysopsia">Whether the candidate answer is in visual impairment mode</param>
         /// <returns></returns>
         CapthcaPoint[] DrawAnswerCandidate(
-            SKCanvas canvas,
+            SKCanvas       canvas,
             CapthcaPoint[] candidatePositions,
-            int width,
-            int height,
+            int    width,
+            int    height,
             string fontFamily,
-            int fontSize = 21,
-            bool dysopsia = false);
+            int    fontSize = 21,
+            bool   dysopsia = false); 
     }
 }

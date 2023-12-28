@@ -8,18 +8,16 @@ namespace WebDemo.Controllers
     [Route("[controller]")]
     public class CaptchaController : ControllerBase
     {
-        readonly ICaptchaService _captchaService;
+        private readonly ICaptchaService _captchaService;
 
         public CaptchaController(ICaptchaService captchaService)
         {
             _captchaService = captchaService;
         }
 
-        /// <summary>
-        /// 获取图形验证码
-        /// </summary>
-        /// <param name="dysopsia">视觉障碍模式是否打开</param>
-        /// <returns>图形验证码</returns>
+        /// Get the graphical captcha
+        /// <param name="dysopsia">Whether visual impairment mode is enabled</param>
+        /// <returns>Graphical captcha</returns>
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] bool dysopsia = false)
         {
@@ -33,11 +31,9 @@ namespace WebDemo.Controllers
             return File(captcha.ImageBytes, "image/png");
         }
 
-        /// <summary>
-        /// 检查用户点击的图形验证码位置是否正确
-        /// </summary>
-        /// <param name="answer">用户点击的坐标列表</param>
-        /// <returns>结果</returns>
+        /// Check if the user-clicked positions on the graphical captcha are correct
+        /// <param name="answer">List of user-clicked coordinates</param>
+        /// <returns>Result</returns>
         [HttpGet("[action]")]
         public async Task<ActionResult<string>> Check([FromQuery] string answer)
         {
@@ -46,9 +42,8 @@ namespace WebDemo.Controllers
                 return BadRequest();
 
             bool result = await _captchaService
-                .VerifyCaptchaAsync(captchaId, answer);
-
-            return result ? "成功，完全匹配" : "错了~~~~";
+            .VerifyCaptchaAsync(captchaId, answer);
+                return result ? "Success, fully matched" : "~~~~Wrong~~~~";
         }
     }
 }

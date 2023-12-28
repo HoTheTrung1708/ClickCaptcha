@@ -1,17 +1,13 @@
 ﻿namespace ClickableCaptcha
 {
-    /// <summary>
-    /// 图形验证码验证器
-    /// </summary>
+    /// Graphic captcha validator
     public class CaptchaValidator
     {
         readonly CapthcaPoint[] _answerList;
 
-        /// <summary>
-        /// 构造图形验证码验证器
-        /// </summary>
-        /// <param name="realAnswer">真实答案</param>
-        /// <exception cref="ArgumentNullException">真实答案不能为NULL</exception>
+        /// Constructs a graphic captcha validator
+        /// <param name="realAnswer">The real answer</param>
+        /// <exception cref="ArgumentNullException">Real answer cannot be NULL</exception>
         public CaptchaValidator(string realAnswer)
         {
             if (string.IsNullOrEmpty(realAnswer))
@@ -19,10 +15,7 @@
 
             _answerList = ToCapthcaPointArray(realAnswer);
         }
-
-        /// <summary>
-        /// 根据网格大小和用户答案检查是否正确
-        /// </summary>
+        /// Checks if the user's answer is correct based on the grid size and the real answer
         /// <param name="userAnswer"></param>
         /// <param name="GridSize"></param>
         /// <returns></returns>
@@ -57,8 +50,7 @@
                         return new CapthcaPoint() { X = inputX, Y = inputY };
                     else
                         return new CapthcaPoint();
-                })
-                .ToArray();
+                }).ToArray();
         }
     }
 }
