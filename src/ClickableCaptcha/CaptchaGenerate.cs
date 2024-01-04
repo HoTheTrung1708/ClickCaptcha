@@ -131,7 +131,7 @@ namespace ClickableCaptcha
                     }
 
                     // Draw question title
-                    DrawQuesitonTitle(canvas, _questions[questionIndex].GetQuestionName());
+                    DrawQuesitonTitle(canvas, _questions[questionIndex].GetQuestionName(), _questions[questionIndex].GetColor());
 
                     // TODO: Additional noise and random lines can be added to enhance the difficulty of machine recognition
 
@@ -193,12 +193,12 @@ namespace ClickableCaptcha
         /// Draw question title
         /// <param name="canvas"></param>
         /// <param name="text"></param>
-        private void DrawQuesitonTitle(SKCanvas canvas, string text)
+        private void DrawQuesitonTitle(SKCanvas canvas, string text, SkiaSharp.SKColor color)
         {
             using (SKPaint paint = new SKPaint())
             {
                 paint.IsAntialias = true;
-                paint.Color = ColorDict[_random.Next(0, ColorDict.Length - 1)].color;
+                paint.Color = color;
                 paint.Typeface = SKTypeface.FromFamilyName(_fontName, SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
                 paint.TextSize = _textFontSize;
 

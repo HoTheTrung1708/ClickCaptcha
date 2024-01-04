@@ -8,6 +8,7 @@ namespace ClickableCaptcha.Questions
         readonly (string, SKColor)[] _colorDict;
 
         string questionName;
+        SkiaSharp.SKColor SkColor;
 
         protected AbsQuestion((string, SKColor)[] colorDict)
         {
@@ -80,8 +81,10 @@ namespace ClickableCaptcha.Questions
                             candidatePositions[i].Y - Convert.ToInt32(height * 0.25),
                             drawStyle);
                 }
-                questionName = $"Click on {anwserResult.Count} {candidateAnswer[0].colorInfo.colorName} of {candidateAnswer[0].questionInfo.questionName}";     
+                questionName = $"Click on {anwserResult.Count} {candidateAnswer[0].colorInfo.colorName} of {candidateAnswer[0].questionInfo.questionName}";
+                SkColor = candidateAnswer[0].colorInfo.color;
                 return anwserResult.ToArray();
+
             }
         }
 
@@ -99,6 +102,10 @@ namespace ClickableCaptcha.Questions
         public string GetQuestionName()
         {
             return questionName;
+        }
+        public SkiaSharp.SKColor GetColor()
+        {
+            return SkColor;
         }
     }
 }
