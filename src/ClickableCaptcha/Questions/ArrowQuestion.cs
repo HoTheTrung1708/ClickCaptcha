@@ -13,10 +13,10 @@ namespace ClickableCaptcha.Questions
 
         public override (string, string)[] CandidateList => new (string, string)[]
             {
-                ("Upward Arrow",   "↑"),
-                ("Downward Arrow", "↓"),
-                ("Leftward Arrow", "←"),
-                ("Rightward Arrow","→"),
+                ("Mũi tên lên ",   "↑"),
+                ("Mũi tên xuống ", "↓"),
+                ("Mũi tên trái ", "←"),
+                ("Mũi tên phải  ","→"),
             };
 
         public override bool CheckAnswerValue => true;

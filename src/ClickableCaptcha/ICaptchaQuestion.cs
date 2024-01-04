@@ -6,6 +6,8 @@ namespace ClickableCaptcha
     public interface ICaptchaQuestion
     {
         string GetQuestionName();
+        SkiaSharp.SKColor GetColor();
+
         /// Draw candidate answers (what is drawn inside the grid)
         /// <param name="canvas">Canvas</param>
         /// <param name="candidatePositions">Positions allocated for your candidate answers, draw your candidate answers at these positions</param>

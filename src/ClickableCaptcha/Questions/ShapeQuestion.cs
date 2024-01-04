@@ -13,14 +13,14 @@ namespace ClickableCaptcha.Questions
 
         public override (string, string)[] CandidateList => new (string, string)[]
             {
-                ("Solid Triangle" ,"▲"),
-                ("Hollow Triangle","△"),
-                ("Solid Square"   ,"■"),
-                ("Hollow Square"  ,"□"),
-                ("Solid Circle"   ,"●"),
-                ("Hollow Circle"  ,"○"),
-                ("Solid Diamond"  ,"◆"),
-                ("Hollow Diamond" ,"◇"),
+                ("Tam giác đặc" ,"▲"),
+                ("Tam giác rỗng","△"),
+                ("Hình vuông đặc "   ,"■"),
+                ("Hình vuông rỗng "  ,"□"),
+                ("Hình tròn đặc "   ,"●"),
+                ("Hình tròn rỗng"  ,"○"),
+                ("Kim cương đặc"  ,"◆"),
+                ("Kim cương rỗng " ,"◇"),
             };
 
         public override bool CheckAnswerValue => true;
