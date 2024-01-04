@@ -13,24 +13,23 @@ namespace ClickableCaptcha.Questions
         }
 
         public override (string, string)[] CandidateList => new (string, string)[]
-            {
-                ("Multiple of 3","3"),
-                ("Multiple of 3","6"),
-                ("Multiple of 3","9"),
-                ("Multiple of 3","12"),
-                ("Multiple of 3","18"),
-                ("Multiple of 3","21"),
-                ("Multiple of 3","24"),
-                ("Multiple of 3","27"),
-                ("Multiple of 3","42"),
+            {   ("Bội số của 3","3"),
+                ("Bội số của 3","6"),
+                ("Bội số của 3","9"),
+                ("Bội số của 3","12"),
+                ("Bội số của 3","18"),
+                ("Bội số của 3","21"),
+                ("Bội số của 3","24"),
+                ("Bội số của 3","27"),
+                ("Bội số của 3","42"),
 
-                ("Multiple of 5","5"),
-                ("Multiple of 5","10"),
-                ("Multiple of 5","20"),
-                ("Multiple of 5","25"),
-                ("Multiple of 5","35"),
-                ("Multiple of 5","40"),
-                ("Multiple of 5","45"),
+                ("Bội số của 5","5"),
+                ("Bội số của 5","10"),
+                ("Bội số của 5","20"),
+                ("Bội số của 5","25"),
+                ("Bội số của 5","35"),
+                ("Bội số của 5","40"),
+                ("Bội số của 5","45"),
             };
 
         public override bool CheckAnswerValue => false;
